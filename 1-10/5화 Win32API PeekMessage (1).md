@@ -1,4 +1,19 @@
-﻿// Client.cpp : 애플리케이션에 대한 진입점을 정의합니다.
+### Win32API 기본
+
+```
+현재 구조의 문제점
+
+모든 물체들이 조금이라도 다시 그려져야 한다면 지웠다가 새로 그려야 한다.
+이 '렌더링'과정을 어느 정도 하는가가 프레임을 결정. 보통 PC게임은 60프레임이 나와야 안정적으로 보인다.
+
+완성된 장면만을 보여주지 않고 모든 장면을 보여주면서 깜빡이듯이 보이는 현상
+
+메세지 기반으로 동작하기에 메세지가 없다면 동작하지 않는다.
+
+```
+
+```cpp
+// Client.cpp : 애플리케이션에 대한 진입점을 정의합니다.
 //
 
 #include "framework.h"
@@ -120,25 +135,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //  WM_PAINT    - 주 창을 그립니다.
 //  WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
 
-#include <vector>
-
-using std::vector;
-
-struct tObjInfo
-{
-    POINT g_ptObjPos;
-    POINT g_ptObjScale;
-};
-
-vector<tObjInfo> g_vecInfo;
-
-// 좌 상단
-POINT g_ptLT;
-
-// 우 하단
-POINT g_ptRB;
-
-bool bLbtnDown = false;
+POINT g_ptObjPos = { 500, 300 };
+POINT g_ptObjScale = { 100, 100 };
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -170,7 +168,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // DC 의 목적지는 hWnd
             // DC 의 펜은 기본펜(Black)
             // DC 의 브러쉬는 기본브러쉬(White)
-            
+
             // 직접 펜과 브러쉬를 만들어서 DC 에 지급
             HPEN hRedPen = CreatePen(PS_SOLID, 1, RGB(255, 0, 0));  // 모르면 msdn 검색하기!
             HBRUSH hBlueBrush = CreateSolidBrush(RGB(0,0,255));
@@ -181,21 +179,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // SelectObject의 역할이 다양. 별도로 캐스팅을 해줘야 한다.
 
             // 변경된 펜으로 사각형 그림
-            if (bLbtnDown) {
-                Rectangle(hdc
-                    , g_ptLT.x, g_ptLT.y
-                    , g_ptRB.x, g_ptRB.y);
-            }
+            Rectangle(hdc
+                , g_ptObjPos.x - g_ptObjScale.x / 2
+                , g_ptObjPos.y - g_ptObjScale.y / 2
+                , g_ptObjPos.x + g_ptObjScale.x / 2
+                , g_ptObjPos.y + g_ptObjScale.y / 2);
 
-            for (size_t i = 0; i < g_vecInfo.size(); ++i)
-            {
-                Rectangle(hdc
-                    , g_vecInfo[i].g_ptObjPos.x - g_vecInfo[i].g_ptObjScale.x / 2
-                    , g_vecInfo[i].g_ptObjPos.y - g_vecInfo[i].g_ptObjScale.y / 2
-                    , g_vecInfo[i].g_ptObjPos.x + g_vecInfo[i].g_ptObjScale.x / 2
-                    , g_vecInfo[i].g_ptObjPos.y + g_vecInfo[i].g_ptObjScale.y / 2);
-            }
-            
             // DC 의 펜을 원래 펜으로 되돌림
             SelectObject(hdc, hDefaultPen);
             SelectObject(hdc, hDefaultBrush);
@@ -215,7 +204,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         {
         case VK_UP:     // 윈도우에서는 키별로 매핑을 다 해놓음.
 
-            //g_ptObjPos.y -= 10;
+            g_ptObjPos.y -= 10;
             InvalidateRect(hWnd, nullptr, true);  // 윈도우는 특정 창의 동작이 발생할 때 OS가 무효화 영역이 발생했다고 생각하고 WM_PAINT 발생
             // (윈도우, 무효화 영역 nullptr = 화면 전체, 이전 것들을 지울지 여부)
 
@@ -223,21 +212,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
         case VK_DOWN:
 
-            //g_ptObjPos.y += 10;
+            g_ptObjPos.y += 10;
             InvalidateRect(hWnd, nullptr, true);
 
             break;
 
         case VK_LEFT:
 
-            //g_ptObjPos.x -= 10;
+            g_ptObjPos.x -= 10;
             InvalidateRect(hWnd, nullptr, true);
 
             break;
 
         case VK_RIGHT:
 
-            //g_ptObjPos.x += 10;
+            g_ptObjPos.x += 10;
             InvalidateRect(hWnd, nullptr, true);
 
             break;
@@ -255,32 +244,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_LBUTTONDOWN:
     {
         // lParam은 4바이트 정수형 자료형으로 각각 2바이트씩 마우스의 x, y좌표를 의미한다.
-        g_ptLT.x = LOWORD(lParam);
-        g_ptLT.y = HIWORD(lParam);
-        bLbtnDown = true;
+        // g_x = LOWORD(lParam);
+        // g_y = HIWORD(lParam);
     }
-        break;
-
-    case WM_MOUSEMOVE:  // 마우스가 움직일 때 발생
-        g_ptRB.x = LOWORD(lParam);
-        g_ptRB.y = HIWORD(lParam);
-        InvalidateRect(hWnd, nullptr, true);
-        break;
-
-    case WM_LBUTTONUP:
-    {
-        tObjInfo info = {};
-        info.g_ptObjPos.x = (g_ptLT.x + g_ptRB.x) / 2;
-        info.g_ptObjPos.y = (g_ptLT.y + g_ptRB.y) / 2;
-
-        info.g_ptObjScale.x = abs(g_ptRB.x - g_ptLT.x);
-        info.g_ptObjScale.y = abs(g_ptRB.y - g_ptLT.y);
-
-        g_vecInfo.push_back(info);
-        bLbtnDown = false;
-        InvalidateRect(hWnd, nullptr, true);
-    }
-        break;
+    break;
 
     case WM_DESTROY:
         PostQuitMessage(0);
@@ -310,3 +277,6 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
     }
     return (INT_PTR)FALSE;
 }
+
+
+```
