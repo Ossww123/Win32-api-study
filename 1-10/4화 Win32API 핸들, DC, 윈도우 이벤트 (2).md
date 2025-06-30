@@ -1,4 +1,7 @@
-﻿// Client.cpp : 애플리케이션에 대한 진입점을 정의합니다.
+### Win32API 기본
+
+```cpp
+// Client.cpp : 애플리케이션에 대한 진입점을 정의합니다.
 //
 
 #include "framework.h"
@@ -153,7 +156,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // DC 의 목적지는 hWnd
             // DC 의 펜은 기본펜(Black)
             // DC 의 브러쉬는 기본브러쉬(White)
-            
+
             // 직접 펜과 브러쉬를 만들어서 DC 에 지급
             HPEN hRedPen = CreatePen(PS_SOLID, 1, RGB(255, 0, 0));  // 모르면 msdn 검색하기!
             HBRUSH hBlueBrush = CreateSolidBrush(RGB(0,0,255));
@@ -169,7 +172,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 , g_ptObjPos.y - g_ptObjScale.y / 2
                 , g_ptObjPos.x + g_ptObjScale.x / 2
                 , g_ptObjPos.y + g_ptObjScale.y / 2);
-            
+
             // DC 의 펜을 원래 펜으로 되돌림
             SelectObject(hdc, hDefaultPen);
             SelectObject(hdc, hDefaultBrush);
@@ -262,3 +265,6 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
     }
     return (INT_PTR)FALSE;
 }
+
+
+```
