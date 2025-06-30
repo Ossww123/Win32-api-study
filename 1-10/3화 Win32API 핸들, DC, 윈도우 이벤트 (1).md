@@ -1,4 +1,61 @@
-﻿// Client.cpp : 애플리케이션에 대한 진입점을 정의합니다.
+### Win32API 기본
+```
+case WM_PAINT:
+무효화 영역(Invalidate)이 발생한 경우 윈도우에서 WM_PAINT를 발생
+창을 최소화 했다가 다시 켤 때 발생
+**예전 자료**
+두 창이 겹치는 부분을 무효화 영역이라고 했으나 최근에는 그렇지 않음
+인터넷 검색 한 번으로 모든 정보를 믿지 말고 꼭 테스트 해보기!
+
+
+
+switch-case문
+case문 안에서 지역변수를 만드려면 대괄호{}를 사용해야 한다.
+int a = 100;
+switch (a)
+{
+    case 100:
+    {
+        int b = 10;
+    }
+        break;
+
+    case 200:
+        break;
+}
+
+
+
+cunnel object
+
+메모리에 있지만 운영체제에서 관리하는 윈도우 객체. 함부로 접근할 수 없음.
+커널 오브젝트가 ID값(hWnd, 핸들)을 주고
+ID별로 전처리기(DECLARE_HANDLE)을 통해 구조체를 만듦으로써 타입을 구별. 
+
+
+
+case WM_PAINT:
+    {
+        PAINTSTRUCT ps;
+        HDC hdc = BeginPaint(hWnd, &ps);
+        // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
+        EndPaint(hWnd, &ps);
+    }
+    break;
+
+HDC hdc = BeginPaint(hWnd, &ps);
+Device Context(그리기) 만들어서 ID를 반환
+그리기 작업을 수횅할 때 필요한 Data 집합
+
+
+
+픽셀
+
+1픽셀은 RGB 각 1바이트씩 총 3바이트로 구성
+```
+
+```cpp
+// Client.cpp : 애플리케이션에 대한 진입점을 정의합니다.
 //
 
 #include "framework.h"
@@ -145,19 +202,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_PAINT:
         {
             PAINTSTRUCT ps;
-
-
-            HDC hdc = BeginPaint(hWnd, &ps); // Device Context (그리기)
-            // DC 의 목적지는 hWnd
-            // DC 의 펜은 기본펜(Black)
-            // DC 의 브러쉬는 기본브러쉬(White)
-            HWND;
-            // 윈도우 핸들
-            // 윈도우 좌표
-            // HDC ?
-
-            Rectangle(hdc, 10, 10, 110, 110);
-            
+            HDC hdc = BeginPaint(hWnd, &ps);
+            // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
             EndPaint(hWnd, &ps);
         }
         break;
@@ -189,3 +235,13 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
     }
     return (INT_PTR)FALSE;
 }
+
+```
+
+**프로그램(Program)**  
+저장장치(하드디스크, SSD 등)에 저장된 실행 가능한 코드 파일  
+컴퓨터에 설치된 소프트웨어 자체를 의미
+
+**프로세스(Process)**  
+프로그램이 실제로 실행되어 메모리에 올라간 상태  
+프로그램을 더블클릭해서 실행하면 그 순간부터 프로세스가 된다
