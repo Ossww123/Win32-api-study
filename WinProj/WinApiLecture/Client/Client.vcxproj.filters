@@ -26,6 +26,9 @@
     <Filter Include="Engine\04. CObject">
       <UniqueIdentifier>{57632409-8009-46fd-acc0-6c0717e71abb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\03. Manager\TimeMgr">
+      <UniqueIdentifier>{d070d5b7-2523-4723-81d3-31c1264c5ccf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCore.h">
@@ -53,6 +56,12 @@
     <ClInclude Include="CObject.h">
       <Filter>Engine\04. CObject</Filter>
     </ClInclude>
+    <ClInclude Include="struct.h">
+      <Filter>Engine\01. Header</Filter>
+    </ClInclude>
+    <ClInclude Include="CTimeMgr.h">
+      <Filter>Engine\03. Manager\TimeMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -77,6 +86,9 @@
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="CObject.cpp">
       <Filter>Engine\04. CObject</Filter>
+    </ClCompile>
+    <ClCompile Include="CTimeMgr.cpp">
+      <Filter>Engine\03. Manager\TimeMgr</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

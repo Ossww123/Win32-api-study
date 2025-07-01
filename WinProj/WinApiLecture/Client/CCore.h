@@ -17,7 +17,4 @@ private:
 	void update();
 	void render();
 
-private:
-	CCore();
-	~CCore();
 };
