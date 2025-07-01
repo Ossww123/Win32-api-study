@@ -158,26 +158,6 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //  WM_PAINT    - 주 창을 그립니다.
 //  WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
 
-#include <vector>
-
-using std::vector;
-
-struct tObjInfo
-{
-    POINT g_ptObjPos;
-    POINT g_ptObjScale;
-};
-
-vector<tObjInfo> g_vecInfo;
-
-// 좌 상단
-POINT g_ptLT;
-
-// 우 하단
-POINT g_ptRB;
-
-bool bLbtnDown = false;
-
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
@@ -205,43 +185,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
             // Device Context 만들어서 ID 를 반환
             HDC hdc = BeginPaint(hWnd, &ps); // Device Context (그리기)
-            // DC 의 목적지는 hWnd
-            // DC 의 펜은 기본펜(Black)
-            // DC 의 브러쉬는 기본브러쉬(White)
+
+            //Rectangle(hdc, 1180, 668, 1280, 768);
             
-            // 직접 펜과 브러쉬를 만들어서 DC 에 지급
-            HPEN hRedPen = CreatePen(PS_SOLID, 1, RGB(255, 0, 0));  // 모르면 msdn 검색하기!
-            HBRUSH hBlueBrush = CreateSolidBrush(RGB(0,0,255));
-            //HBRUSH hBlueBrush = GetStockObject();                   // 자주 쓰는 브러쉬는 스톡오브젝트에 저장되어있다.
-
-            HPEN hDefaultPen = (HPEN)SelectObject(hdc, hRedPen);    // 원래 가지고 있던 디폴트 펜 반환
-            HBRUSH hDefaultBrush = (HBRUSH)SelectObject(hdc, hBlueBrush);
-            // SelectObject의 역할이 다양. 별도로 캐스팅을 해줘야 한다.
-
-            // 변경된 펜으로 사각형 그림
-            if (bLbtnDown) {
-                Rectangle(hdc
-                    , g_ptLT.x, g_ptLT.y
-                    , g_ptRB.x, g_ptRB.y);
-            }
-
-            for (size_t i = 0; i < g_vecInfo.size(); ++i)
-            {
-                Rectangle(hdc
-                    , g_vecInfo[i].g_ptObjPos.x - g_vecInfo[i].g_ptObjScale.x / 2
-                    , g_vecInfo[i].g_ptObjPos.y - g_vecInfo[i].g_ptObjScale.y / 2
-                    , g_vecInfo[i].g_ptObjPos.x + g_vecInfo[i].g_ptObjScale.x / 2
-                    , g_vecInfo[i].g_ptObjPos.y + g_vecInfo[i].g_ptObjScale.y / 2);
-            }
-            
-            // DC 의 펜을 원래 펜으로 되돌림
-            SelectObject(hdc, hDefaultPen);
-            SelectObject(hdc, hDefaultBrush);
-
-            // 다 쓴 Red펜, Blue브러쉬 삭제 요청
-            DeleteObject(hRedPen);
-            DeleteObject(hBlueBrush);
-
             // 그리기 종료
             EndPaint(hWnd, &ps);
         }
@@ -249,74 +195,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
     case WM_KEYDOWN:
     {
-        switch (wParam)  // 부가적인 파라미터
-        {
-        case VK_UP:     // 윈도우에서는 키별로 매핑을 다 해놓음.
-
-            //g_ptObjPos.y -= 10;
-            InvalidateRect(hWnd, nullptr, true);  // 윈도우는 특정 창의 동작이 발생할 때 OS가 무효화 영역이 발생했다고 생각하고 WM_PAINT 발생
-            // (윈도우, 무효화 영역 nullptr = 화면 전체, 이전 것들을 지울지 여부)
-
-            break;
-
-        case VK_DOWN:
-
-            //g_ptObjPos.y += 10;
-            InvalidateRect(hWnd, nullptr, true);
-
-            break;
-
-        case VK_LEFT:
-
-            //g_ptObjPos.x -= 10;
-            InvalidateRect(hWnd, nullptr, true);
-
-            break;
-
-        case VK_RIGHT:
-
-            //g_ptObjPos.x += 10;
-            InvalidateRect(hWnd, nullptr, true);
-
-            break;
-
-        case 'W':       // 아스키 코드
-        {
-            int a = 0;
-        }
-            break;
-
-        }
+        
     }
         break;
 
     case WM_LBUTTONDOWN:
     {
-        // lParam은 4바이트 정수형 자료형으로 각각 2바이트씩 마우스의 x, y좌표를 의미한다.
-        g_ptLT.x = LOWORD(lParam);
-        g_ptLT.y = HIWORD(lParam);
-        bLbtnDown = true;
+        
     }
         break;
 
     case WM_MOUSEMOVE:  // 마우스가 움직일 때 발생
-        g_ptRB.x = LOWORD(lParam);
-        g_ptRB.y = HIWORD(lParam);
-        InvalidateRect(hWnd, nullptr, true);
+        
         break;
 
     case WM_LBUTTONUP:
     {
-        tObjInfo info = {};
-        info.g_ptObjPos.x = (g_ptLT.x + g_ptRB.x) / 2;
-        info.g_ptObjPos.y = (g_ptLT.y + g_ptRB.y) / 2;
-
-        info.g_ptObjScale.x = abs(g_ptRB.x - g_ptLT.x);
-        info.g_ptObjScale.y = abs(g_ptRB.y - g_ptLT.y);
-
-        g_vecInfo.push_back(info);
-        bLbtnDown = false;
-        InvalidateRect(hWnd, nullptr, true);
     }
         break;
 
