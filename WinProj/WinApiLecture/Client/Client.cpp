@@ -49,8 +49,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     // PeekMessage
     // 메세지 유무와 관계없이 반환
     // 메세지큐에서 메세지를 확인한 경우 true, 메세지큐에 메세지가 없는 경우 false 를 반환한다.
-
-
     while (true)
     {
         if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
