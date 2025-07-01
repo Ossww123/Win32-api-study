@@ -47,6 +47,8 @@ int CCore::init(HWND _hwnd, POINT _ptResolution)
 
 void CCore::progress()
 {
+	// Manager Update
+	CTimeMgr::GetInst()->update();
 
 	update();
 
@@ -59,12 +61,12 @@ void CCore::update()
 
 	if (GetAsyncKeyState(VK_LEFT) & 0x8000)  // & 0x8000 --> ¿ÞÂÊÅ°°¡ ´­·È´ÂÁö
 	{
-		vPos.x -= 0.01f;
+		vPos.x -= 100.f * CTimeMgr::GetInst()->GetfDT();
 	}
 
 	if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
 	{
-		vPos.x += 0.01f;
+		vPos.x += 100.f * CTimeMgr::GetInst()->GetfDT();
 	}
 
 	g_obj.SetPos(vPos);
