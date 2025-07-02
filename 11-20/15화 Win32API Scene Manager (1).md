@@ -7,6 +7,5 @@
 public:
 	CScene();
 	virtual ~CScene();
-};
 // virtual이 없으면 자식쪽의 소멸자가 호출되지 않음!!
 ```

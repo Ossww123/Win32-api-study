@@ -7,9 +7,6 @@
 
 #include "CObject.h"
 
-
-CObject g_obj;
-
 CCore::CCore()
 	: m_hWnd(0)
 	, m_ptResolution{}
@@ -53,9 +50,6 @@ int CCore::init(HWND _hwnd, POINT _ptResolution)
 	CKeyMgr::GetInst()->init();
 	CSceneMgr::GetInst()->init();
 
-	g_obj.SetPos(Vec2( (float)(m_ptResolution.x / 2) , (float)(m_ptResolution.y / 2 )));
-	g_obj.SetScale(Vec2( 100, 100 ));
-
 	return S_OK;
 }
 
@@ -64,44 +58,17 @@ void CCore::progress()
 	// Manager Update
 	CTimeMgr::GetInst()->update();
 	CKeyMgr::GetInst()->update();
+	CSceneMgr::GetInst()->update();
 
-	update();
+	// =========
+	// Rendering
+	// =========
 
-	render();
-}
-
-void CCore::update()
-{
-	Vec2 vPos = g_obj.GetPos();
-
-	if (CKeyMgr::GetInst()->GetKeyState(KEY::LEFT) == KEY_STATE::TAB)  // & 0x8000 --> 왼쪽키가 눌렸는지
-	{
-		vPos.x -= 100.f * CTimeMgr::GetInst()->GetfDT();
-	}
-
-	if (CKeyMgr::GetInst()->GetKeyState(KEY::RIGHT) == KEY_STATE::TAB)
-	{
-		vPos.x += 100.f * CTimeMgr::GetInst()->GetfDT();
-	}
-
-	g_obj.SetPos(vPos);
-}
-
-void CCore::render()
-{
 	// 화면 Clear
 	Rectangle(m_memDC, -1, -1, m_ptResolution.x + 1, m_ptResolution.y + 1);
 
-	// 그리기
-	Vec2 vPos = g_obj.GetPos();
-	Vec2 vScale = g_obj.GetScale();
-
-	Rectangle(m_memDC
-		,int(vPos.x - vScale.x / 2.f)
-		,int(vPos.y - vScale.y / 2.f)
-		,int(vPos.x + vScale.x / 2.f)
-		,int(vPos.y + vScale.y / 2.f));
+	CSceneMgr::GetInst()->render(m_memDC);
 
 	BitBlt(m_hDC, 0, 0, m_ptResolution.x, m_ptResolution.y
-			, m_memDC, 0, 0, SRCCOPY);
+		, m_memDC, 0, 0, SRCCOPY);
 }
