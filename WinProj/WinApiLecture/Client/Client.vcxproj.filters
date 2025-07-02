@@ -29,6 +29,27 @@
     <Filter Include="Engine\03. Manager\TimeMgr">
       <UniqueIdentifier>{d070d5b7-2523-4723-81d3-31c1264c5ccf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\05. Scene">
+      <UniqueIdentifier>{11f86996-2898-4dcb-8f33-8e7c7aa02de9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. CObject\NewFilter1">
+      <UniqueIdentifier>{3105a675-60b7-482c-99be-0fa4dfa73bb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. CObject\NewFilter2">
+      <UniqueIdentifier>{62248661-de32-4497-a073-fd1ba179b1a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. CObject\NewFilter3">
+      <UniqueIdentifier>{73a2dcf4-5c8d-437e-8ca3-aaec57f8b9b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\03. Manager\SceneMgr">
+      <UniqueIdentifier>{a59e99a3-0655-46e2-93dc-1a0a90f16f6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\05. Scene\Scene_Start">
+      <UniqueIdentifier>{101b8e8d-2a32-40b1-9459-909587dace39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\05. Scene\Scene_Tool">
+      <UniqueIdentifier>{741c420b-80fb-48fd-a474-e27e6166509d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCore.h">
@@ -62,6 +83,15 @@
     <ClInclude Include="CTimeMgr.h">
       <Filter>Engine\03. Manager\TimeMgr</Filter>
     </ClInclude>
+    <ClInclude Include="CScene.h">
+      <Filter>Engine\05. Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CSceneMgr.h">
+      <Filter>Engine\03. Manager\SceneMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CScene_Start.h">
+      <Filter>Engine\05. Scene\Scene_Start</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -89,6 +119,15 @@
     </ClCompile>
     <ClCompile Include="CTimeMgr.cpp">
       <Filter>Engine\03. Manager\TimeMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CScene.cpp">
+      <Filter>Engine\05. Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CSceneMgr.cpp">
+      <Filter>Engine\03. Manager\SceneMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CScene_Start.cpp">
+      <Filter>Engine\05. Scene\Scene_Start</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
