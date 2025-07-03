@@ -32,15 +32,6 @@
     <Filter Include="Engine\05. Scene">
       <UniqueIdentifier>{11f86996-2898-4dcb-8f33-8e7c7aa02de9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\04. CObject\NewFilter1">
-      <UniqueIdentifier>{3105a675-60b7-482c-99be-0fa4dfa73bb3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\04. CObject\NewFilter2">
-      <UniqueIdentifier>{62248661-de32-4497-a073-fd1ba179b1a2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\04. CObject\NewFilter3">
-      <UniqueIdentifier>{73a2dcf4-5c8d-437e-8ca3-aaec57f8b9b1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\03. Manager\SceneMgr">
       <UniqueIdentifier>{a59e99a3-0655-46e2-93dc-1a0a90f16f6b}</UniqueIdentifier>
     </Filter>
@@ -49,6 +40,15 @@
     </Filter>
     <Filter Include="Engine\05. Scene\Scene_Tool">
       <UniqueIdentifier>{741c420b-80fb-48fd-a474-e27e6166509d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. CObject\Player">
+      <UniqueIdentifier>{3105a675-60b7-482c-99be-0fa4dfa73bb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. CObject\Monster">
+      <UniqueIdentifier>{62248661-de32-4497-a073-fd1ba179b1a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04. CObject\Missile">
+      <UniqueIdentifier>{73a2dcf4-5c8d-437e-8ca3-aaec57f8b9b1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -92,6 +92,15 @@
     <ClInclude Include="CScene_Start.h">
       <Filter>Engine\05. Scene\Scene_Start</Filter>
     </ClInclude>
+    <ClInclude Include="CPlayer.h">
+      <Filter>Engine\04. CObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CMonster.h">
+      <Filter>Engine\04. CObject\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="CMissile.h">
+      <Filter>Engine\04. CObject\Missile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -128,6 +137,15 @@
     </ClCompile>
     <ClCompile Include="CScene_Start.cpp">
       <Filter>Engine\05. Scene\Scene_Start</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer.cpp">
+      <Filter>Engine\04. CObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonster.cpp">
+      <Filter>Engine\04. CObject\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="CMissile.cpp">
+      <Filter>Engine\04. CObject\Missile</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
