@@ -9,6 +9,25 @@
 
 #include "CMissile.h"
 
+#include "CPathMgr.h"
+#include "CTexture.h"
+
+CPlayer::CPlayer()
+	: m_pTex(nullptr)
+{
+	// Texture 로딩하기
+	m_pTex = new CTexture;
+
+	wstring strFilepath = CPathMgr::GetInst()->GetContentPath();
+	strFilepath += L"texture\\Player.bmp";
+	m_pTex->Load(strFilepath);
+}
+
+CPlayer::~CPlayer()
+{
+	if (nullptr != m_pTex)
+		delete m_pTex;
+}
 
 void CPlayer::update()
 {
@@ -42,6 +61,29 @@ void CPlayer::update()
 	SetPos(vPos);
 }
 
+void CPlayer::render(HDC _dc)
+{
+	int iWidth = (int)m_pTex->Width();
+	int iHeight = (int)m_pTex->Height();
+
+	Vec2 vPos = GetPos();
+
+	//BitBlt(_dc
+	//	, int(vPos.x - (float)(iWidth / 2))
+	//	, int(vPos.y - (float)(iHeight / 2))
+	//	, iWidth, iHeight
+	//	, m_pTex->GetDC()
+	//	, 0, 0, SRCCOPY);
+
+	TransparentBlt(_dc
+		, int(vPos.x - (float)(iWidth / 2))
+		, int(vPos.y - (float)(iHeight / 2))
+		, iWidth, iHeight
+		, m_pTex->GetDC()
+		, 0, 0, iWidth, iHeight
+		, RGB(255, 0, 255));
+}
+
 void CPlayer::CreateMissile()
 
 {
@@ -57,3 +99,4 @@ void CPlayer::CreateMissile()
 	CScene* pCurScene = CSceneMgr::GetInst()->GetCurScene();
 	pCurScene->AddObject(pMissile, GROUP_TYPE::DEFAULT);
 }
+
