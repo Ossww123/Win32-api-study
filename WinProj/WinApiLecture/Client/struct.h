@@ -4,6 +4,21 @@ struct Vec2
 	float x;
 	float y;
 
+public:
+	float Length()
+	{
+		return sqrt(x * x + y * y);
+	}
+	Vec2& Nomalize()
+	{
+		float fLen = Length();
+
+		assert(fLen != 0.f);
+		x /= fLen;
+		y /= fLen;
+
+		return *this;
+	}
 
 public:
 	Vec2& operator = (POINT _pt)
