@@ -11,12 +11,16 @@
 
 #include "CResMgr.h"
 #include "CTexture.h"
+#include "CCollider.h"
 
 CPlayer::CPlayer()
 	: m_pTex(nullptr)
 {
 	// Texture 로딩하기
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Player.bmp");
+
+	CreateCollider();
+	GetCollider()->SetScale(Vec2(100.f, 100.f));
 }
 
 CPlayer::~CPlayer()
@@ -77,6 +81,9 @@ void CPlayer::render(HDC _dc)
 		, m_pTex->GetDC()
 		, 0, 0, iWidth, iHeight
 		, RGB(255, 0, 255));
+
+	// 컴포넌트(충돌체, etc...) 렌더링
+	component_render(_dc);
 }
 
 void CPlayer::CreateMissile()

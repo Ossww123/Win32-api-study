@@ -9,6 +9,7 @@ CMonster::CMonster()
 	, m_fMaxDistance(100.f)
 	, m_iDir(1)
 {
+	CreateCollider();
 }
 
 CMonster::~CMonster()
