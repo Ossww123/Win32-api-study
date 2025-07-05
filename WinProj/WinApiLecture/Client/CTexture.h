@@ -18,8 +18,10 @@ public:
     HDC GetDC() { return m_dc; }
 
 
-public:
+private:
     CTexture();
     ~CTexture();
+
+    friend class CResMgr;
 };
 
