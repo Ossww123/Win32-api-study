@@ -17,7 +17,6 @@ CCore::CCore()
 	, m_arrBrush{}
 	, m_arrPen{}
 {	  
-
 }
 
 CCore::~CCore()
@@ -76,7 +75,6 @@ void CCore::progress()
 	// ============
 	// Scene Update
 	// ============
-
 	CSceneMgr::GetInst()->update();
 
 	// 충돌 체크

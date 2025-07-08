@@ -2,6 +2,7 @@
 
 class CCollider;
 
+
 class CObject
 {
 private:
