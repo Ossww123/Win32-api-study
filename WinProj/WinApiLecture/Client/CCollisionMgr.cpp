@@ -50,7 +50,7 @@ void CCollisionMgr::CollisionGroupUpdate(GROUP_TYPE _eLeft, GROUP_TYPE _eRight)
 		if (nullptr == vecLeft[i]->GetCollider())
 			continue;
 
-		for (size_t j = 0; j < vecLeft.size(); ++j)
+		for (size_t j = 0; j < vecRight.size(); ++j)
 		{
 			// 충돌체가 없거나, 자기 자신과의 충돌인 경우
 			if (nullptr == vecRight[j]->GetCollider()
@@ -60,7 +60,7 @@ void CCollisionMgr::CollisionGroupUpdate(GROUP_TYPE _eLeft, GROUP_TYPE _eRight)
 			}
 
 			CCollider* pLeftCol = vecLeft[i]->GetCollider();
-			CCollider* pRightCol = vecRight[i]->GetCollider();
+			CCollider* pRightCol = vecRight[j]->GetCollider();
 
 			// 두 충돌체 조합 아이디 생성
 			COLLIDER_ID ID;
@@ -83,15 +83,29 @@ void CCollisionMgr::CollisionGroupUpdate(GROUP_TYPE _eLeft, GROUP_TYPE _eRight)
 				if (iter->second)
 				{
 					// 이전에도 충돌 하고 있었다.
-					pLeftCol->OnCollision(pRightCol);
-					pRightCol->OnCollision(pLeftCol);
+					if (vecLeft[i]->IsDead() || vecRight[j]->IsDead())
+					{
+						// 둘중 하나가 삭제 예정이라면, 충돌 해제시켜준다
+						pLeftCol->OnCollisionExit(pRightCol);
+						pRightCol->OnCollisionExit(pLeftCol);
+						iter->second = false;
+					}
+					else
+					{
+						pLeftCol->OnCollision(pRightCol);
+						pRightCol->OnCollision(pLeftCol);
+					}
 				}
 				else
 				{
 					// 이전에는 충돌하지 않았다.
-					pLeftCol->OnCollisionEnter(pRightCol);
-					pRightCol->OnCollisionEnter(pLeftCol);
-					iter->second = true;
+					// 근데 둘중 하나가 삭제 예정이라면, 충돌하지 않은것으로 취급
+					if (!vecLeft[i]->IsDead() && vecRight[j]->IsDead())
+					{
+						pLeftCol->OnCollisionEnter(pRightCol);
+						pRightCol->OnCollisionEnter(pLeftCol);
+						iter->second = true;
+					}
 				}
 			}
 			else

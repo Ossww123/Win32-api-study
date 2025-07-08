@@ -88,18 +88,17 @@ void CPlayer::render(HDC _dc)
 }
 
 void CPlayer::CreateMissile()
-
 {
 	Vec2 vMissilePos = GetPos();
 	vMissilePos.y -= GetScale().y / 2.f;
 
 	// Missile Object
 	CMissile* pMissile = new CMissile;
+	pMissile->SetName(L"Missile_Player");
 	pMissile->SetPos(vMissilePos);
 	pMissile->SetScale(Vec2(25.f, 25.f));
-	pMissile->SetDir(Vec2(1.f, 7.f));
+	pMissile->SetDir(Vec2(0.f, -1.f));
 
-	CScene* pCurScene = CSceneMgr::GetInst()->GetCurScene();
-	pCurScene->AddObject(pMissile, GROUP_TYPE::DEFAULT);
+	CreateObject(pMissile, GROUP_TYPE::PROJ_PLAYER);
 }
 
